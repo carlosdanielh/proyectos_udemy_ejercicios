@@ -44,6 +44,11 @@ while not game_over:
             count_score += 1
             chose_higher = True
 
+            name_a = option_b['name']
+            description_a = option_b['description']
+            country_a = option_b['country']
+            followers_a = option_b['follower_count']
+
             option_b = data[random_number()]
             name_b = option_b['name']
             description_b = option_b['description']
