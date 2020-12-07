@@ -1,52 +1,23 @@
-# MENU = {
-#     "espresso": {
-#         "ingredients": {
-#             "water": 50,
-#             "coffee": 18,
-#         },
-#         "cost": 1.5,
-#     }}
-
-# print(MENU['espresso']['ingredients']['coffee'])
-# print(MENU['espresso']['ingredients']['water'])
-# print(MENU['espresso']['cost'])
-MENU = {
-    "espresso": {
-        "ingredients": {
-            "water": 50,
-            "coffee": 18,
-        },
-        "cost": 1.5,
-    },
-    "latte": {
-        "ingredients": {
-            "water": 200,
-            "milk": 150,
-            "coffee": 24,
-        },
-        "cost": 2.5,
-    },
-    "cappuccino": {
-        "ingredients": {
-            "water": 250,
-            "milk": 100,
-            "coffee": 24,
-        },
-        "cost": 3.0,
-    }
-}
-
-resources = {
-    "water": 300,
-    "milk": 200,
-    "coffee": 100,
-}
-
+from data_coffe import MENU, resources
 
 QUARTERS = 0.25
 DIMES = 0.10
 NICKLES = 0.05
 PENNIES = 0.01
+
+
+def is_there_resource(type_of_coffee, resources):
+    
+    ingredients_menu = MENU[type_of_coffee]['ingredients'].keys()
+
+    for ingredients in ingredients_menu:
+        ingredient_of_coffee_selected = MENU[type_of_coffee]['ingredients']\
+                                            [ingredients]
+        for resource in resources:
+            if ingredients == resource and\
+                 resources[ingredients] / ingredient_of_coffee_selected < 1:
+                return False
+    return True
 
 
 def show_report(resources, total_money):
@@ -61,7 +32,8 @@ def show_report(resources, total_money):
 
 
 def verify_type_of_coffe(type_of_coffe):
-    if type_of_coffe not in ['espresso', 'latte', 'cappuccino', 'report']:
+    if type_of_coffe not in\
+                          ['espresso', 'latte', 'cappuccino', 'report', 'off']:
         return False
     return True
 
@@ -82,17 +54,39 @@ def change(money_given, type_):
     return money_given - MENU[type_]['cost']
 
 
+def update_resources(resources, type_of_coffee):
+    for ingredients in MENU[type_of_coffee]['ingredients']:
+        for resource in resources:
+            if ingredients == resource:
+                resources[ingredients] -= MENU[type_of_coffee]\
+                                                ['ingredients'][ingredients]
+
+
+def ingredients_in_resources(resources, type_of_coffee):
+    list_ingredients = []
+    for ingredients in MENU[type_of_coffee]['ingredients']:
+        ingredient_of_coffee_selected = MENU[type_of_coffee]['ingredients']\
+                                            [ingredients]
+        for resource in resources:
+            if ingredients == resource and\
+                 resources[ingredients] / ingredient_of_coffee_selected <= 1:
+                list_ingredients.append(ingredients)
+    return list_ingredients
+
+
 total_money_earned = 0
-endless = True
-while endless:
+turn_off = False
+while not turn_off:
     exist_type_of_coffe = False
     while not exist_type_of_coffe:
         type_ = input('What would you like? (espresso/latte/cappuccino): ').lower()
         exist_type_of_coffe = verify_type_of_coffe(type_)
 
-    if type_ == 'report':        
+    if type_ == 'report':
         show_report(resources, total_money_earned)
-    elif exist_type_of_coffe:
+
+    elif type_ in ['espresso', 'latte', 'cappuccino'] and\
+            is_there_resource(type_, resources):
         print('please insert coint: ')
         quarters = int(input('how many quarters?: '))
         dimes = int(input('how many dimes?: '))
@@ -102,17 +96,24 @@ while endless:
         amount = add_coints(quarters, dimes, nickles, pennies)
         cost_coffe = MENU[type_]['cost']
         print(f'total:{amount} the coffe cost: {cost_coffe} ')
-        
+
         if validate_if_enough_money_to_buy_coffe(type_, amount):
+            update_resources(resources, type_)
             total_money_earned += cost_coffe
             if change(amount, type_) > 0:
-                money_change = change(amount, type_)             
+                money_change = change(amount, type_)
                 print(f'Here is {money_change} in change.')
                 print('Here is your espresso ☕️. Enjoy!')
             else:
                 print('Here is your espresso ☕️. Enjoy!')
-
         else:
             print('Sorry that\'s not enough money. Money refunded.')
+
+    elif type_ in ['espresso', 'latte', 'cappuccino'] and not\
+            is_there_resource(type_, resources):
+
+        ingredients = ingredients_in_resources(resources, type_)
+        print(f'Sorry there is not enough {ingredients}.')
+
     else:
-        exist_type_of_coffe = False
+        turn_off = True
