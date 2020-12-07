@@ -49,8 +49,19 @@ NICKLES = 0.05
 PENNIES = 0.01
 
 
+def show_report(resources, total_money):
+    money = total_money
+    water = resources['water']
+    milk = resources['milk']
+    coffee = resources['coffee']
+    print(f'Water: {water}')
+    print(f'Milk: {milk}')
+    print(f'Coffee: {coffee}')
+    print(f'Money: {money}')
+
+
 def verify_type_of_coffe(type_of_coffe):
-    if type_of_coffe not in ['espresso', 'latte', 'cappuccino']:
+    if type_of_coffe not in ['espresso', 'latte', 'cappuccino', 'report']:
         return False
     return True
 
@@ -71,11 +82,17 @@ def change(money_given, type_):
     return money_given - MENU[type_]['cost']
 
 
-exist_type_of_coffe = False
-while not exist_type_of_coffe:
-    type_ = input('What would you like? (espresso/latte/cappuccino): ').lower()
-    exist_type_of_coffe = verify_type_of_coffe(type_)
-    if exist_type_of_coffe:
+total_money_earned = 0
+endless = True
+while endless:
+    exist_type_of_coffe = False
+    while not exist_type_of_coffe:
+        type_ = input('What would you like? (espresso/latte/cappuccino): ').lower()
+        exist_type_of_coffe = verify_type_of_coffe(type_)
+
+    if type_ == 'report':        
+        show_report(resources, total_money_earned)
+    elif exist_type_of_coffe:
         print('please insert coint: ')
         quarters = int(input('how many quarters?: '))
         dimes = int(input('how many dimes?: '))
@@ -85,9 +102,11 @@ while not exist_type_of_coffe:
         amount = add_coints(quarters, dimes, nickles, pennies)
         cost_coffe = MENU[type_]['cost']
         print(f'total:{amount} the coffe cost: {cost_coffe} ')
+        
         if validate_if_enough_money_to_buy_coffe(type_, amount):
+            total_money_earned += cost_coffe
             if change(amount, type_) > 0:
-                money_change = change(amount, type_)
+                money_change = change(amount, type_)             
                 print(f'Here is {money_change} in change.')
                 print('Here is your espresso ☕️. Enjoy!')
             else:
@@ -97,4 +116,3 @@ while not exist_type_of_coffe:
             print('Sorry that\'s not enough money. Money refunded.')
     else:
         exist_type_of_coffe = False
-        
