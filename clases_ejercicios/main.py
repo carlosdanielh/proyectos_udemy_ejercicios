@@ -1,8 +1,8 @@
 from menu import Menu, MenuItem
 from coffee_maker import CoffeeMaker
 from money_machine import MoneyMachine
-
-coffee = MenuItem('espresso', 50, 0, 18, 1.5)
+menu_ = Menu()
+coffee = menu_.find_drink('espresso')
 #coffee_latte = MenuItem('latte', 200, 150, 24, 2.5)
 #coffee_cappuccino = MenuItem('cappuccino', 250, 100, 24, 3.0)
 
@@ -14,11 +14,12 @@ print(coffee.cost)
 print(coffee.ingredients)
 
 print('________________________menu')
-menu_ = Menu()
+
 print(menu_.get_items())
 a = menu_.find_drink('espresso')
+print(a)
+print(menu_.find_drink('cola'))
 menu_.find_drink('cola')
-print(a.name)
 
 print('________________________coffemaker')
 maker = CoffeeMaker()

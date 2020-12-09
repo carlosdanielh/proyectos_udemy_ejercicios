@@ -1,4 +1,4 @@
-MenuItem Class
+MenuItem Class###################
 
 
 Attributes:
@@ -25,7 +25,7 @@ e.g. {“water”: 100, “coffee”: 16}
 
 
 
-Menu Class
+Menu Class#####################
 
 
 Methods:
@@ -49,7 +49,7 @@ object if it exists, otherwise returns
 
 
 
-CoffeeMaker Class
+CoffeeMaker Class######################
 
 
 Methods:
@@ -89,7 +89,7 @@ from the resources.
 
 
 
-MoneyMachine Class
+MoneyMachine Class#######################
 
 
 Methods:
