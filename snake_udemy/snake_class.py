@@ -12,7 +12,7 @@ class Snake():
 
     def __init__(self):
         self.snake_body = []
-
+        self.activate = False
         for position in START_BODY_POSITION:
             body = Turtle('square')
             body.color('white')
@@ -31,6 +31,7 @@ class Snake():
     def up(self):
         if self.snake_body[0].heading() != DOWN:
             self.snake_body[0].setheading(UP)
+            self.activate = True
 
     def down(self):
         if self.snake_body[0].heading() != UP:
@@ -43,3 +44,18 @@ class Snake():
     def right(self):
         if self.snake_body[0].heading() != LEFT:
             self.snake_body[0].setheading(RIGHT)
+
+    def pause(self):
+        self.activate = False
+
+    def continue_(self):
+        self.activate = True
+
+    def collide(self, food):
+        if self.snake_body[0].distance(food) < 15:
+            return True
+
+    def grow(self, grow):
+
+        self.snake_body[0].append()
+
