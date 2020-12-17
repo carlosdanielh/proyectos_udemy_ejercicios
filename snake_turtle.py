@@ -1,18 +1,14 @@
 from turtle import Turtle, Screen
-
+from time import sleep
 
 def move(key_pressed):
     global move_x
     global move_y
     game_over = False
-    screen.tracer(1, 20)
+    # screen.tracer(1, 20)
     while not game_over:
-
-        while True:
-            # screen.tracer(1,20)
-            # screen.update()
-            # screen.tracer(1, 3)
-            # screen.update()
+        
+        while True:           
 
             if key_pressed == 'right':
                 move_x += 20
@@ -23,18 +19,24 @@ def move(key_pressed):
             elif key_pressed == 'left':
                 move_y = 0
                 move_x -= 20
-                screen.update()
             elif key_pressed == 'down':
                 move_x = 0
                 move_y -= 20
 
+            screen.tracer(1)
             for index, body in enumerate((body_snake)):
                 x = list_position[index][0] + move_x
                 y = list_position[index][1] + move_y
                 print(f' x {x}')
                 print(f' y {y}')
                 body.goto(x, y)
-            # screen.update()
+            print('-----------')
+            # import pdb; pdb.set_trace()
+            screen.update()
+            move_y = 0
+            move_x = 0
+            sleep(1)
+            
 
 
 def right():
@@ -74,9 +76,9 @@ for position in list_position:
 screen.update()
 screen.tracer(1, 20)
 screen.listen()
-screen.onkey(up, 'Up')
-screen.onkey(down, 'Down')
-screen.onkey(right, 'Right')
-screen.onkey(left, 'Left')
+screen.onkeypress(up, 'Up')
+screen.onkeypress(down, 'Down')
+screen.onkeypress(right, 'Right')
+screen.onkeypress(left, 'Left')
 
 screen.mainloop()
