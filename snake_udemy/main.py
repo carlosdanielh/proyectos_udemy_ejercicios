@@ -2,6 +2,8 @@ from turtle import Screen
 from time import sleep
 from snake_class import Snake
 from Food import Food
+from scoreboard import ScoreBoard
+
 
 screen = Screen()
 screen.setup(width=500, height=500)
@@ -10,7 +12,7 @@ screen.bgcolor('black')
 
 snake = Snake()
 food = Food()
-# snake.move('right')
+score = ScoreBoard()
 
 screen.listen()
 screen.onkeypress(snake.up, 'Up')
@@ -28,11 +30,15 @@ while not game_over:
 
     if snake.activate:
         snake.move()
-    print(snake.snake_body[0].distance(food))
 
     if snake.collide(food):
         food.random_move()
+        score.add_point()
+        snake.grow()
 
+    if snake.touch_border():
+        score.game_over_message()
+        game_over = True
 
 
 screen.mainloop()
