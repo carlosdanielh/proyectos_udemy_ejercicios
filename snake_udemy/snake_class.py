@@ -6,6 +6,10 @@ UP = 90
 DOWN = 270
 RIGHT = 0
 LEFT = 180
+RIGHT_WALL = 250
+LEFT_WALL = -250
+UP_WALL = 250
+DOWN_WALL = -250
 
 
 class Snake():
@@ -14,11 +18,17 @@ class Snake():
         self.snake_body = []
         self.activate = False
         for position in START_BODY_POSITION:
-            body = Turtle('square')
-            body.color('white')
-            body.penup()
-            body.goto(position)
-            self.snake_body.append(body)
+            self.add_part_of_body(position)
+
+    def add_part_of_body(self, position):
+        body = Turtle('square')
+        body.color('white')
+        body.penup()
+        body.goto(position)
+        self.snake_body.append(body)
+
+    def grow(self):
+        self.add_part_of_body(self.snake_body[-1].position())
 
     def move(self):
         for number_of_body in range(len(self.snake_body) - 1, 0, - 1):
@@ -55,7 +65,11 @@ class Snake():
         if self.snake_body[0].distance(food) < 15:
             return True
 
-    def grow(self, grow):
+    def touch_border(self):
 
-        self.snake_body[0].append()
-
+        if self.snake_body[0].xcor() >= RIGHT_WALL or\
+               self.snake_body[0].xcor() <= LEFT_WALL or\
+               self.snake_body[0].ycor() >= UP_WALL or\
+               self.snake_body[0].ycor() <= DOWN_WALL:
+            return True
+        return False
