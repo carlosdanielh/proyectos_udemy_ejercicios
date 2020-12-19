@@ -36,9 +36,12 @@ while not game_over:
         score.add_point()
         snake.grow()
 
+    if snake.collide(snake.snake_body):
+        print('game over')
+        game_over = True
+
     if snake.touch_border():
         score.game_over_message()
         game_over = True
-
 
 screen.mainloop()
