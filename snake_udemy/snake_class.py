@@ -61,15 +61,25 @@ class Snake():
     def continue_(self):
         self.activate = True
 
-    def collide(self, food):
-        if self.snake_body[0].distance(food) < 15:
-            return True
+    def collide(self, something):
+        if type(something) != list:
+            if self.snake_body[0].distance(something) < 15:
+                return True
+        else:            
+            for index in range(len(something)):
+                if index < len(something)-1:
+                    if self.snake_body[0].position() == something[index + 1].position():
+                        print('perdiste')
+                        return True
 
     def touch_border(self):
-
         if self.snake_body[0].xcor() >= RIGHT_WALL or\
                self.snake_body[0].xcor() <= LEFT_WALL or\
                self.snake_body[0].ycor() >= UP_WALL or\
                self.snake_body[0].ycor() <= DOWN_WALL:
             return True
         return False
+
+    
+    
+
