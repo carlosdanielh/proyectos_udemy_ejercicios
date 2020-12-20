@@ -35,8 +35,13 @@ while not game_over:
     sleep(0.01)
     ball.move()
 
-    if ball.collide():
-        print('touch top')
+    if ball.collide(screen):
+        ball.bounce_walls()
+
+    if ball.collide(table_right) or ball.collide(table_left):
+        ball.bounce_tables()
+
+    if ball.touch_empty_space():        
         game_over = True
 
 screen.mainloop()
