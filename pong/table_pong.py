@@ -10,12 +10,14 @@ class Table(Turtle):
         self.penup()
 
     def up(self):
-        new_y = self.ycor() + 20
-        self.goto(self.xcor(), new_y)
+        if self.ycor() < 220:
+            new_y = self.ycor() + 20
+            self.goto(self.xcor(), new_y)
 
     def down(self):
-        new_y = self.ycor() - 20
-        self.goto(self.xcor(), new_y)
+        if self.ycor() > -220:
+            new_y = self.ycor() - 20
+            self.goto(self.xcor(), new_y)
 
     def draw_paddle_right(self):
         self.goto(350, 0)
