@@ -43,3 +43,7 @@ class Ball(Turtle):
     def touch_empty_space(self):
         if self.xcor() >= 390 or self.xcor() <= -390:
             return True
+
+    def start_game_again(self):
+        self.goto(0, 0)
+        self.bounce_tables()
