@@ -9,7 +9,7 @@ class Ball(Turtle):
         self.penup()
         self.x = 10
         self.y = 10
-
+        
     def move(self):
         new_x = self.xcor() + self.x
         new_y = self.ycor() + self.y
