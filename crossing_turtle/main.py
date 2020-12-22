@@ -27,8 +27,9 @@ while not game_over:
         turtle.start_position()
     elif cars.run_into(turtle):
         score.game_over_msg()
+        game_over = True
 
-    # if cars.over_pass_left_screen():
-    #     cars.random_position()
+    if cars.over_pass_left_screen():
+        cars.start_new_position_right()
 
 screen.mainloop()
