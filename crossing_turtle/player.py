@@ -11,11 +11,11 @@ class Player(Turtle):
         self.goto(0, -280)
 
     def up(self):
-        y = self.ycor() + 10
+        y = self.ycor() + 20
         self.goto(0, y)
 
     def down(self):
-        y = self.ycor() - 10
+        y = self.ycor() - 20
         self.goto(0, y)
 
     def over_pass_top_screen(self):
