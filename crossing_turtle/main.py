@@ -18,9 +18,9 @@ screen.onkeypress(turtle.down, 'Down')
 
 game_over = False
 while not game_over:
-    screen.update()
     sleep(0.1)
     cars.move()
+    screen.update()
 
     if turtle.over_pass_top_screen():
         score.set_point()
