@@ -9,10 +9,10 @@ class Score(Turtle):
         self.hideturtle()
         self.level_msg()
 
-
     def level_msg(self):
         self.goto(-250, 270)
-        self.write(f'Level: {self.level}', align='center', font=('Arial', 14, 'normal'))
+        self.write(f'Level: {self.level}', align='center',
+                   font=('Arial', 14, 'normal'))
 
     def game_over_msg(self):
         self.goto(0, 0)
@@ -20,3 +20,5 @@ class Score(Turtle):
 
     def set_point(self):
         self.level += 1
+        self.clear()
+        self.level_msg()
