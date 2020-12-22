@@ -19,10 +19,10 @@ class Player(Turtle):
         self.goto(0, y)
 
     def over_pass_top_screen(self):
-        if self.ycor() > 300:
+        if self.ycor() > 340:
             return True
 
     def start_position(self):
-        self.screen.tracer(0) 
+        self.screen.tracer(0)
         self.goto(0, -280)
         self.screen.update()
