@@ -2,7 +2,7 @@ from turtle import Turtle
 import random
 
 
-colors = ['red', 'violet', 'brown', 'blue', 'orange', 'green', 'yellow',
+colors = ['red', 'violet', 'brown', 'blue', 'orange', 'green', 'black',
           'pink', 'purple', 'fuchsia', 'navy']
 
 
@@ -28,17 +28,19 @@ class Cars:
         return new_x
 
     def over_pass_left_screen(self):
-        if self.new_car.xcor() > -300:
-            self.start_new_position()
+        if self.new_car.xcor() < -340:
+            self.start_new_position_right()
 
     def start_new_position_right(self):
+        self.new_car.screen.tracer(0)
         x = random.randint(320, 340)
-        self.goto(x, self.new_y())
+        self.new_car.goto(x, self.new_y())
+        self.new_car.screen.update()
 
     def move(self):
         self.new_car.goto(self.new_car.xcor() - 5, self.new_car.ycor())
 
     def run_into(self, turtle):
-        if self.new_car.distance(turtle) < 35:
+        if self.new_car.distance(turtle) < 25:
             return True
         return False
