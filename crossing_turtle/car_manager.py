@@ -3,7 +3,7 @@ import random
 
 
 colors = ['red', 'violet', 'brown', 'blue', 'orange', 'green', 'black',
-          'pink', 'purple', 'fuchsia', 'navy']
+          'brown', 'purple', 'fuchsia', 'navy']
 
 MAX_CAR = 30
 
@@ -20,6 +20,7 @@ class Cars():
             self.new_car.penup()
             self.new_car.goto(self.new_x(), self.new_y())
             self.list_car.append(self.new_car)
+        self.speed_move = 5
         self.move()
 
     def new_y(self):
@@ -39,14 +40,19 @@ class Cars():
         car.screen.tracer(0)
         x = random.randint(320, 340)
         car.goto(x, self.new_y())
-        car.screen.update()
 
     def move(self):
         for car in self.list_car:
-            car.forward(10)
+            car.forward(self.speed_move)
 
+    def level_up_speed(self):
+        self.speed_move += 5
+        
     def run_into(self, turtle):
         for car in self.list_car:
-            if car.distance(turtle) < 24:
+            if turtle.distance(car) <= 27:
+                print(turtle.distance(car))
+                print(car.ycor())
+                print(car.color())
                 return True
         return False
