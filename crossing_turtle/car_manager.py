@@ -6,21 +6,22 @@ colors = ['red', 'violet', 'brown', 'blue', 'orange', 'green', 'black',
           'brown', 'purple', 'fuchsia', 'navy']
 
 MAX_CAR = 30
+STEPS = 5
 
 
 class Cars():
     def __init__(self):
         self.list_car = []
         for _ in range(MAX_CAR):
-            self.new_car = Turtle()
-            self.new_car.setheading(180)
-            self.new_car.color(random.choice(colors))
-            self.new_car.shape('square')
-            self.new_car.shapesize(1, 2)
-            self.new_car.penup()
-            self.new_car.goto(self.new_x(), self.new_y())
-            self.list_car.append(self.new_car)
-        self.speed_move = 5
+            new_car = Turtle()
+            new_car.setheading(180)
+            new_car.color(random.choice(colors))
+            new_car.shape('square')
+            new_car.shapesize(1, 2)
+            new_car.penup()
+            new_car.goto(self.new_x(), self.new_y())
+            self.list_car.append(new_car)
+        self.speed_move = STEPS
         self.move()
 
     def new_y(self):
@@ -46,7 +47,7 @@ class Cars():
             car.forward(self.speed_move)
 
     def level_up_speed(self):
-        self.speed_move += 5
+        self.speed_move += STEPS
 
     def run_into(self, turtle):
         for car in self.list_car:
