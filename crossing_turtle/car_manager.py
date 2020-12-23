@@ -52,8 +52,5 @@ class Cars():
     def run_into(self, turtle):
         for car in self.list_car:
             if turtle.distance(car) <= 27:
-                print(turtle.distance(car))
-                print(car.ycor())
-                print(car.color())
                 return True
         return False
