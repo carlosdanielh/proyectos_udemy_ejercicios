@@ -33,7 +33,7 @@ class Cars():
 
     def over_pass_left_screen(self):
         for car in self.list_car:
-            if car.xcor() < -340:
+            if car.xcor() < -310:
                 self.start_new_position_right(car)
 
     def start_new_position_right(self, car):
@@ -47,7 +47,7 @@ class Cars():
 
     def level_up_speed(self):
         self.speed_move += 5
-        
+
     def run_into(self, turtle):
         for car in self.list_car:
             if turtle.distance(car) <= 27:
