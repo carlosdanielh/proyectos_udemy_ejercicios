@@ -35,6 +35,7 @@ while not game_over:
         food.random_move()
         score.add_point()
         snake.grow()
+        score.high_score_msg()
 
     if snake.collide(snake.snake_body) or snake.touch_border():
         score.game_over_message()
