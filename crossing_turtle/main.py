@@ -3,6 +3,8 @@ from player import Player
 from score import Score
 from time import sleep
 from car_manager import Cars
+
+
 screen = Screen()
 screen.tracer(0)
 screen.setup(600, 600)
