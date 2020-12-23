@@ -8,8 +8,8 @@ screen.tracer(0)
 screen.setup(600, 600)
 cars = Cars()
 score = Score()
-screen.update()
 turtle = Player()
+screen.update()
 
 screen.tracer(1)
 screen.listen()
@@ -18,13 +18,13 @@ screen.onkeypress(turtle.down, 'Down')
 
 game_over = False
 while not game_over:
-    sleep(0.1)
     cars.move()
     screen.update()
 
     if turtle.over_pass_top_screen():
         score.set_point()
         turtle.start_position()
+        cars.level_up_speed()
     elif cars.run_into(turtle):
         score.game_over_msg()
         game_over = True
@@ -32,4 +32,5 @@ while not game_over:
     if cars.over_pass_left_screen():
         cars.start_new_position_right()
 
+    sleep(0.1)
 screen.mainloop()
