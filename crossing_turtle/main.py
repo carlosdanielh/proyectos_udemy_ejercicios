@@ -13,7 +13,6 @@ score = Score()
 turtle = Player()
 screen.update()
 
-screen.tracer(1)
 screen.listen()
 screen.onkeypress(turtle.up, 'Up')
 screen.onkeypress(turtle.down, 'Down')
