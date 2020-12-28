@@ -1,5 +1,5 @@
 #! python 3
-# file_replace.py, it will replace every ADJECTIVE, NOUN, ADVERB, or VERB 
+# file_replace.py, it will replace every ADJECTIVE, NOUN, ADVERB, or VERB
 # within a text file with a user's own text
 from pathlib import Path
 import re
@@ -38,8 +38,9 @@ if answer == 'y':
     for index, new_word in enumerate(list_new_words):
         old_word = list_match[index]
         all_text = all_text.replace(old_word, new_word, 1)
+
     with open(Path.cwd() / 'udemy_projects' / 'files_boringstuff' / 'pro' /
-             'replace.txt', 'w') as file_replace:
+              'replace.txt', 'w') as file_replace:
 
         file_replace.write(all_text)
 else:
