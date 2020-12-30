@@ -19,7 +19,8 @@ import pandas
 
 
 data_csv = pandas.read_csv(str(Path('c://') / 'find' / 'census.csv'))
-os.system('cls')
+
+
 # print(type(data_csv))
 # temp_list = data_csv['temp'].max()
 # print(temp_list)
@@ -32,5 +33,13 @@ os.system('cls')
 
 # a = pandas.DataFrame(monday)
 # a.to_csv('a.csv')
-# gray = 
-print(data_csv['Fur_Color'].count())
+# gray =
+os.system('cls')
+colors = ['Gray', 'Black', 'Cinnamon']
+list_colors = data_csv.Fur_Color.to_list()
+lista = []
+for color in colors:
+    lista.append([color, data_csv.Fur_Color.to_list().count(color)])
+data = pandas.DataFrame(lista, columns=['Fur Color', 'count'])
+data.to_csv(Path.cwd() / 'udemy_projects' / 'files_boringstuff' /
+            'cvs' / 'new_color.csv')
