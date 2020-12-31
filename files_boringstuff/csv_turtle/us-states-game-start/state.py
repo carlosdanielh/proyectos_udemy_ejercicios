@@ -10,8 +10,6 @@ class State(Turtle):
         self.data_states = pandas.read_csv(the_path)
         self.guess = 0
         self.guess_state_list = []
-        self.x = 0
-        self.y = 0
         self.hideturtle()
         self.penup()
 
@@ -25,9 +23,9 @@ class State(Turtle):
         return False
 
     def get_coordinate(self, user_answer):
-        self.x = self.data_states[self.data_states.state == user_answer].x
-        self.y = self.data_states[self.data_states.state == user_answer].y
-        return [self.x.to_list(), self.y.to_list()]
+        x = self.data_states[self.data_states.state == user_answer].x
+        y = self.data_states[self.data_states.state == user_answer].y
+        return [x.to_list(), y.to_list()]
 
     def guess_message(self):
         if self.guess == 0:

@@ -1,7 +1,8 @@
-from turtle import Screen, Turtle
-from pathlib import Path
-from state import State
 import os
+from pathlib import Path
+from turtle import Screen, Turtle
+
+from state import State
 
 os.system('cls')
 windows = Screen()
