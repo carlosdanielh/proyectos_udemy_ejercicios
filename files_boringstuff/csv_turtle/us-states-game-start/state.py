@@ -37,7 +37,7 @@ class State(Turtle):
     def format_answer(self, answer):
         return answer.lower().title()
 
-    def move_state_to_coordinate(self, answer):
+    def move_state_to_map(self, answer):
         answer = self.format_answer(answer)
         position = self.get_coordinate(answer)
         x_pos = position[0][0]

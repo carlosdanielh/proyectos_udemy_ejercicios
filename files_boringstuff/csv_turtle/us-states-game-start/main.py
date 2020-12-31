@@ -27,7 +27,7 @@ while not want_to_exit:
     if len(answer_state) == 0:
         want_to_exit = True
     elif state.check_state(answer_state):
-        state.move_state_to_coordinate(answer_state)
+        state.move_state_to_map(answer_state)
 
 windows.bye()
 windows.mainloop()
