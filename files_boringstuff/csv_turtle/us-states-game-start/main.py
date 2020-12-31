@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from turtle import Screen, Turtle
-
 from state import State
 
 os.system('cls')
