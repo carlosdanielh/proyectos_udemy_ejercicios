@@ -43,4 +43,4 @@ class State(Turtle):
         x_pos = position[0][0]
         y_pos = position[1][0]
         self.goto(x_pos, y_pos)
-        self.write(answer, font=('Arial', 7, 'normal'))     
+        self.write(answer, font=('Arial', 7, 'normal'))  
