@@ -21,7 +21,8 @@ state = State()
 want_to_exit = False
 while not want_to_exit:
     answer_state = windows.textinput(title=state.guess_message(),
-                                     prompt='Whats the other state\'s name'
+                                     prompt='Whats the other state\'s name '
+                                     '(blank input to exit)'
                                      )
 
     if len(answer_state) == 0:
