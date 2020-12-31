@@ -29,7 +29,7 @@ class State(Turtle):
         return message
 
     def format_answer(self, answer):
-        return answer.lower().title()
+        return answer.title()
 
     def move_state_to_map(self, answer):
         answer = self.format_answer(answer)
