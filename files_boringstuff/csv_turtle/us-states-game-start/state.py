@@ -13,6 +13,7 @@ class State(Turtle):
         self.x = 0
         self.y = 0
         self.hideturtle()
+        self.penup()
 
     def check_state(self, user_answer):
         user_answer = self.format_answer(user_answer)
@@ -24,7 +25,6 @@ class State(Turtle):
         return False
 
     def get_coordinate(self, user_answer):
-        # import pdb; pdb.set_trace()
         self.x = self.data_states[self.data_states.state == user_answer].x
         self.y = self.data_states[self.data_states.state == user_answer].y
         return [self.x.to_list(), self.y.to_list()]
@@ -36,7 +36,7 @@ class State(Turtle):
             message = f'GUESSED {self.guess}/50 U.S STATE GAME'
         return message
 
-    def format_answer(answer):
+    def format_answer(self, answer):
         return answer.lower().title()
 
     def move_state_to_coordinate(self, answer):
@@ -44,4 +44,4 @@ class State(Turtle):
         new_x = position[0][0]
         new_y = position[1][0]
         self.goto(new_x, new_y)
-        self.write(self.format_answer(answer), font=('Arial', 5, 'normal'))        
+        self.write(self.format_answer(answer), font=('Arial', 7, 'normal'))        
