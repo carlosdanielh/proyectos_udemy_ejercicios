@@ -20,7 +20,7 @@ class State(Turtle):
             return True
         return False
 
-    def guess_message(self):
+    def count_message(self):
         guess = len(self.guess_state_list)
         if guess == 0:
             message = 'U.S STATE GAME'
