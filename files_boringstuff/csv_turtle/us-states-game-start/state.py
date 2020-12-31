@@ -38,8 +38,9 @@ class State(Turtle):
         return answer.lower().title()
 
     def move_state_to_coordinate(self, answer):
-        position = self.get_coordinate(self.format_answer(answer))
-        new_x = position[0][0]
-        new_y = position[1][0]
-        self.goto(new_x, new_y)
-        self.write(self.format_answer(answer), font=('Arial', 7, 'normal'))     
+        answer = self.format_answer(answer)
+        position = self.get_coordinate(answer)
+        x_pos = position[0][0]
+        y_pos = position[1][0]
+        self.goto(x_pos, y_pos)
+        self.write(answer, font=('Arial', 7, 'normal'))     
