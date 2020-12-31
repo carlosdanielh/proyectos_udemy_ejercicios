@@ -15,8 +15,7 @@ class State(Turtle):
         self.hideturtle()
 
     def check_state(self, user_answer):
-        user_answer = user_answer.lower().title()
-
+        user_answer = self.format_answer(user_answer)
         if len(self.data_states[self.data_states.state == user_answer]) == 1\
                 and user_answer not in self.guess_state_list:
             self.guess_state_list.append(user_answer)
@@ -37,15 +36,12 @@ class State(Turtle):
             message = f'GUESSED {self.guess}/50 U.S STATE GAME'
         return message
 
+    def format_answer(answer):
+        return answer.lower().title()
+
     def move_state_to_coordinate(self, answer):
-        
-        position = self.get_coordinate(answer.lower().title())
+        position = self.get_coordinate(self.format_answer(answer))
         new_x = position[0][0]
         new_y = position[1][0]
         self.goto(new_x, new_y)
-        # import pdb; pdb.set_trace()
-        print(new_x)
-        print(new_y)
-        self.clear()
-        self.write(answer.lower().title(), font=('Arial', 5, 'normal'))
-        
+        self.write(self.format_answer(answer), font=('Arial', 5, 'normal'))        
