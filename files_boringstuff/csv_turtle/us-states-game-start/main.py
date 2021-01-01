@@ -4,21 +4,22 @@ from turtle import Screen, Turtle
 from state import State
 
 FONT_YOU_WON = ('Arial', 24, 'normal', 'bold')
+PATH_OF_IMAGE = str(Path.cwd() / 'udemy_projects' / 'files_boringstuff' /
+                    'csv_turtle' / 'us-states-game-start' /
+                    'blank_states_img.gif'
+                    )
 
 os.system('cls')
 windows = Screen()
+windows.title('USA STATE')
 windows.tracer(0)
 windows.setup(740, 540)
 turtle = Turtle()
-windows.title = ('U.S State')
-image = str(Path.cwd() / 'udemy_projects' / 'files_boringstuff' /
-            'csv_turtle' / 'us-states-game-start' /
-            'blank_states_img.gif'
-            )
-windows.addshape(image)
-turtle.shape(image)
+windows.addshape(PATH_OF_IMAGE)
+turtle.shape(PATH_OF_IMAGE)
 windows.update()
 state = State()
+
 want_to_exit = False
 while not want_to_exit:
     answer_state = windows.textinput(title=state.count_message(),
