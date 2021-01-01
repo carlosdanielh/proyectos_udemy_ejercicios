@@ -2,12 +2,14 @@ import pandas
 from pathlib import Path
 from turtle import Turtle
 
+PATH_OF_50_STATES_CSV = str(Path.cwd() / 'data' / '50_states.csv')
+PATH_OF_NO_GUESSED_STATE = str(Path.cwd() / 'data' / 'no_guessed_states.csv')
+
 
 class State(Turtle):
     def __init__(self):
         super().__init__()
-        the_path = str(Path.cwd() / 'data' / '50_states.csv')
-        self.data_states = pandas.read_csv(the_path)
+        self.data_states = pandas.read_csv(PATH_OF_50_STATES_CSV)
         self.guess_state_list = []
         self.hideturtle()
         self.penup()
@@ -41,10 +43,9 @@ class State(Turtle):
     def saved_to_csv_all_state_no_guessed(self):
         state_no_guessed_list = []
         all_state_list = self.data_states.state.to_list()
-        the_path = str(Path.cwd() / 'data' / 'no_guessed_states.csv')
 
         for state in all_state_list:
             if state not in self.guess_state_list:
                 state_no_guessed_list.append(state)
         no_guessed_state_csv = pandas.DataFrame(state_no_guessed_list)
-        no_guessed_state_csv.to_csv(the_path)
+        no_guessed_state_csv.to_csv(PATH_OF_NO_GUESSED_STATE)
