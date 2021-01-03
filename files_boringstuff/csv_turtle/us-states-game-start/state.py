@@ -33,11 +33,14 @@ class State(Turtle):
         self.write(answer, font=('Arial', 7, 'normal'))
 
     def saved_to_csv_all_state_no_guessed(self):
-        state_no_guessed_list = []
+        # state_no_guessed_list = []
         all_state_list = self.data_states.state.to_list()
 
-        for state in all_state_list:
-            if state not in self.guess_state_list:
-                state_no_guessed_list.append(state)
+        # for state in all_state_list:
+        #     if state not in self.guess_state_list:
+        #         state_no_guessed_list.append(state)
+
+        state_no_guessed_list = [state for state in all_state_list
+                                 if state not in self.guess_state_list]
         no_guessed_state_csv = pandas.DataFrame(state_no_guessed_list)
         no_guessed_state_csv.to_csv(PATH_OF_NO_GUESSED_STATE)
