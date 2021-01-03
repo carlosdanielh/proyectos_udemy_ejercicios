@@ -3,7 +3,9 @@ from pathlib import Path
 from turtle import Screen, Turtle
 from state import State
 from square import Square
-FONT_YOU_WON = ('Arial', 24, 'normal', 'bold')
+
+
+FONT_YOU_WON = ('Arial', 50, 'normal', 'bold')
 PATH_OF_IMAGE = str(Path.cwd() / 'udemy_projects' / 'files_boringstuff' /
                     'csv_turtle' / 'us-states-game-start' /
                     'blank_states_img.gif'
@@ -21,12 +23,12 @@ turtle = Turtle()
 windows.addshape(PATH_OF_IMAGE)
 turtle.shape(PATH_OF_IMAGE)
 square_draw = Square()
+counter = Square()
 windows.update()
-
 
 want_to_exit = False
 while not want_to_exit:
-    state.count_message()
+    counter.point(state.guess_state_list)
     answer_state = windows.textinput(title='THE USA STATES',
                                      prompt='Whats the other state\'s name '
                                      '(type nothing to exit)'
@@ -41,6 +43,6 @@ while not want_to_exit:
     if len(state.guess_state_list) == 50:
         turtle.goto(-100, 0)
         turtle.color('red')
-        turtle.write('YOU WON!! THANK YOU FOR GAME', FONT_YOU_WON)
+        turtle.write('YOU WON!!', font=FONT_YOU_WON)
 
 windows.mainloop()
