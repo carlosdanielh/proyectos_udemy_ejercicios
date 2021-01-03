@@ -17,7 +17,6 @@ windows.setup(740, 640, 0, 0)
 windows.colormode(255)
 windows.bgcolor(151, 235, 235)
 state = State()
-counter = State()
 turtle = Turtle()
 windows.addshape(PATH_OF_IMAGE)
 turtle.shape(PATH_OF_IMAGE)
@@ -27,9 +26,7 @@ windows.update()
 
 want_to_exit = False
 while not want_to_exit:
-    windows.tracer(1)
-    counter.count_message()
-    windows.update()
+    state.count_message()
     answer_state = windows.textinput(title='THE USA STATES',
                                      prompt='Whats the other state\'s name '
                                      '(type nothing to exit)'
@@ -46,5 +43,4 @@ while not want_to_exit:
         turtle.color('red')
         turtle.write('YOU WON!! THANK YOU FOR GAME', FONT_YOU_WON)
 
-windows.update()
 windows.mainloop()
