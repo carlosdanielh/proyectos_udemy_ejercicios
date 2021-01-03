@@ -27,6 +27,7 @@ class State(Turtle):
         self.goto(158, 260)
         guess = len(self.guess_state_list)
         message = f'SCORE {guess}/50'
+        # self.clear()
         self.write(message, font=FONT_COUNT)
 
     def format_answer(self, answer):
@@ -37,6 +38,7 @@ class State(Turtle):
         x = int(self.data_states[self.data_states.state == answer].x)
         y = int(self.data_states[self.data_states.state == answer].y)
         self.goto(x, y)
+        self.clear()
         self.write(answer, font=('Arial', 7, 'normal'))
 
     def saved_to_csv_all_state_no_guessed(self):
