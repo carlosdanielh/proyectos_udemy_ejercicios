@@ -4,7 +4,6 @@ from turtle import Turtle
 
 PATH_OF_50_STATES_CSV = str(Path.cwd() / 'data' / '50_states.csv')
 PATH_OF_NO_GUESSED_STATE = str(Path.cwd() / 'data' / 'no_guessed_states.csv')
-FONT_COUNT=('Arial', 20, 'normal')
 
 
 class State(Turtle):
@@ -23,13 +22,6 @@ class State(Turtle):
             return True
         return False
 
-    def count_message(self):
-        self.goto(158, 260)
-        guess = len(self.guess_state_list)
-        message = f'SCORE {guess}/50'
-        # self.clear()
-        self.write(message, font=FONT_COUNT)
-
     def format_answer(self, answer):
         return answer.title()
 
@@ -38,7 +30,6 @@ class State(Turtle):
         x = int(self.data_states[self.data_states.state == answer].x)
         y = int(self.data_states[self.data_states.state == answer].y)
         self.goto(x, y)
-        self.clear()
         self.write(answer, font=('Arial', 7, 'normal'))
 
     def saved_to_csv_all_state_no_guessed(self):
@@ -50,4 +41,3 @@ class State(Turtle):
                 state_no_guessed_list.append(state)
         no_guessed_state_csv = pandas.DataFrame(state_no_guessed_list)
         no_guessed_state_csv.to_csv(PATH_OF_NO_GUESSED_STATE)
-
