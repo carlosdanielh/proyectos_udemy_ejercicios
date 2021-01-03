@@ -1,6 +1,9 @@
 from turtle import Turtle
 
 
+FONT_COUNT = ('Arial', 20, 'normal')
+
+
 class Square(Turtle):
     def __init__(self):
         super().__init__()
@@ -19,3 +22,10 @@ class Square(Turtle):
             self.right(90)
             self.forward(self.list_rectangle_sides[pos][1])
             self.right(90)
+
+    def point(self, list_guessed_state):
+        self.goto(158, 260)
+        guess = len(list_guessed_state)
+        message = f'SCORE {guess}/50'
+        self.clear()
+        self.write(message, font=FONT_COUNT)
