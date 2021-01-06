@@ -1,6 +1,8 @@
 import tkinter as tk
 from pathlib import Path
 import math
+# from img_class import PhotoMain
+from PIL import ImageTk, Image
 # ---------------------------- CONSTANTS -------------------------------- #
 PINK = "#e2979c"
 RED = "#e7305b"
@@ -11,12 +13,17 @@ WORK_MIN = 5
 SHORT_BREAK_MIN = 2
 LONG_BREAK_MIN = 11
 counting = 0
+PHOTO_PATH = str(Path.cwd() / 'img' / 'check.png')
 # THE_IMAGE = str(Path.cwd() / 'udemy_projects' /
 #                 'timer_tomato_project' / 'tomato.png')
 THE_IMAGE = ('C:\\Users\\programacion\\Desktop\\ejercicios\\udemy_projects'
              '\\timer_tomato_project\\tomato.png')
 
-
+def phto_label(path, w, h):
+    image = Image.open(path)
+    image = image.resize((w, h), Image.ANTIALIAS)
+    photo = ImageTk.PhotoImage(image)
+    return photo
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_time():
     global counting
@@ -73,6 +80,21 @@ button_start.grid(column=0, row=3)
 
 button_reset = tk.Button(text='Reset', command=reset_time)
 button_reset.grid(column=2, row=3)
+
+photo = phto_label(PHOTO_PATH, 40, 30)
+label_image = tk.Label(image=photo)
+label_image.image = photo
+label_image.grid(column=1, row=2)
+
+photo1 = phto_label(PHOTO_PATH, 40, 30)
+label_image1 = tk.Label(image=photo1)
+label_image1.image = photo1
+label_image1.grid(column=1, row=3, columnspan=3, sticky='W')
+
+photo2 = phto_label(PHOTO_PATH, 40, 30)
+label_image2 = tk.Label(image=photo2)
+label_image2.image = photo2
+label_image2.grid(column=1, row=3, columnspan=1)
 
 canvas = tk.Canvas(width=280, height=224, bg='red', highlightthickness=0,)
 tomato_img = tk.PhotoImage(file=THE_IMAGE)
