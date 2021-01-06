@@ -7,7 +7,7 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Segoe Script"
-WORK_MIN = 10
+WORK_MIN = 5
 SHORT_BREAK_MIN = 2
 LONG_BREAK_MIN = 11
 counting = 0
@@ -47,17 +47,16 @@ def count_down(count):
     global id_after
     count_min = math.floor(count / 60)
     count_sec = count % 60
-
-    if count_sec == 0:
-        start_counting()
     if count_sec < 10:
         count_sec = f'0{count_sec}'
     if count_min == 0 or count_min < 10:
         count_min = f'0{count_min}'
 
-    canvas.itemconfig(timer_text, text=f'{count_min}:{count_sec}')
-    if count > 0:
-        id_after = windows.after(1000, count_down, count - 1)
+    if count >= 0:
+        id_after = windows.after(100, count_down, count - 1)
+        canvas.itemconfig(timer_text, text=f'{count_min}:{count_sec}')
+    else:
+        start_counting()
 
 
 # ---------------------------- UI SETUP ---------------------------------- #
