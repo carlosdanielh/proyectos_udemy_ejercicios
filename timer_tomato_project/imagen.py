@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import ImageTk, Image
 from pathlib import Path
-from img_class import PhotoMain
+
 PHOTO_PATH = str(Path.cwd() / 'img' / 'check.png')
 root= tk.Tk()
 
