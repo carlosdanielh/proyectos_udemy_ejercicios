@@ -10,8 +10,7 @@ YELLOW = "#f7f5dd"
 BLUE = '#f9caa7'
 FONT_NAME = "Segoe Script"
 PHOTO_PATH = str(Path.cwd() / 'img' / 'check.png')
-THE_TOMATO_IMG_PATH = str(Path.cwd() / 'udemy_projects' / 
-                          'timer_tomato_project' / 'tomato2.png')
+THE_TOMATO_IMG_PATH = str(Path.cwd() / 'img' / 'tomato2.png')
 BUTTON_FONT = ('Arial', 10, 'bold')
 FONT_LABEL_TIMER = ("Segoe Script", 26, 'bold')
 WORK_MIN = 5
