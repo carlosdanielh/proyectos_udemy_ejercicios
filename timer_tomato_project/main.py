@@ -3,16 +3,15 @@ from pathlib import Path
 import math
 from PIL import ImageTk, Image
 # ---------------------------- CONSTANTS -------------------------------- #
-PINK = "#e2979c"
-RED = "#e7305b"
-GREEN = "#9bdeac"
-YELLOW = "#f7f5dd"
-BLUE = '#f9caa7'
-FONT_NAME = "Segoe Script"
-PHOTO_PATH = str(Path.cwd() / 'img' / 'check.png')
-THE_TOMATO_IMG_PATH = str(Path.cwd() / 'img' / 'tomato2.png')
+FG_BREAK = "#e7305b"  # PINK
+BG_COLOR = '#464646'  # GREY 
+WORK_COLOR = '#5aa57d'  # GREEN
+FONT_NAME = "Comic Sans MS"
+FONT_LABEL_TIMER = (FONT_NAME, 26, 'bold')
+PATH_CHECKS = str(Path.cwd() / 'img' / 'check.png')
+PATH_TOMATO = str(Path.cwd() / 'img' / 'tomato2.png')
+PATH_ICON = str(Path.cwd() / 'img' / 'tomate_ico.png')
 BUTTON_FONT = ('Arial', 10, 'bold')
-FONT_LABEL_TIMER = ("Segoe Script", 26, 'bold')
 WORK_MIN = 5
 SHORT_BREAK_MIN = 2
 LONG_BREAK_MIN = 11
@@ -44,7 +43,7 @@ def reset_time():
     canvas.itemconfig(timer_text, text='00:00')
     windows.after_cancel(id_after)
     button_start.configure(state=tk.ACTIVE)
-    label_timer.configure(text='TIMER', font=FONT_LABEL_TIMER, bg=BLUE,
+    label_timer.configure(text='TIMER', font=FONT_LABEL_TIMER, bg=BG_COLOR,
                           fg='black')
     hide_all_check_buttons()
 
@@ -59,15 +58,15 @@ def start_counting():
         if counting % 2 == 1:
             count_down(WORK_MIN)
             label_timer.configure(text='WORK',
-                                  font=FONT_LABEL_TIMER, fg='black')
+                                  font=FONT_LABEL_TIMER, fg=WORK_COLOR)
         elif counting % 2 == 0 and counting != 8:
             count_down(SHORT_BREAK_MIN)
             label_timer.configure(text='BREAK',
-                                  font=FONT_LABEL_TIMER, fg=GREEN)
+                                  font=FONT_LABEL_TIMER, fg=FG_BREAK)
         else:
             count_down(LONG_BREAK_MIN)
             label_timer.configure(text='LONG BREAK',
-                                  font=FONT_LABEL_TIMER, fg=GREEN)
+                                  font=FONT_LABEL_TIMER, fg=FG_BREAK)
     else:
         counting = 0
         reset_time()
@@ -98,12 +97,14 @@ def count_down(count):
 # ---------------------------- UI SETUP ---------------------------------- #
 windows = tk.Tk()
 windows.title('pomodora')
-windows.config(bg=BLUE)
-# windows.config(padx=100, pady=50, bg=BLUE)
+windows.config(bg=BG_COLOR)
+icon = tk.PhotoImage(file=PATH_ICON)
+windows.iconphoto(False, icon)
+# windows.config(padx=100, pady=50, bg=BG_COLOR)
 
 
 label_timer = tk.Label(text='TIMER', font=FONT_LABEL_TIMER,
-                       bg=BLUE)
+                       bg=BG_COLOR)
 label_timer.grid(column=1, row=0)
 
 button_start = tk.Button(text='Start', command=start_counting,
@@ -115,10 +116,10 @@ button_reset = tk.Button(text='Reset', command=reset_time,
 button_reset.grid(column=2, row=1)
 
 ###############################################################################
-frame_bottom = tk.Frame(windows, bg=BLUE, width=160, height=30)
-photo = photo_resize(PHOTO_PATH, 40, 30)
+frame_bottom = tk.Frame(windows, bg=BG_COLOR, width=160, height=30)
+photo = photo_resize(PATH_CHECKS, 40, 30)
 
-list_check_image = [tk.Label(frame_bottom, image=photo, bg=BLUE)
+list_check_image = [tk.Label(frame_bottom, image=photo, bg=BG_COLOR)
                     for element in range(4)]
 # list_check_image[0].pack(side=tk.LEFT)
 # list_check_image[1].pack(side=tk.LEFT)
@@ -132,8 +133,8 @@ frame_bottom.grid(column=1, row=2)
 ###############################################################################
 # hide_all_check_buttons()
 
-canvas = tk.Canvas(width=280, height=224, bg=BLUE, highlightthickness=0,)
-tomato_img = photo_resize(THE_TOMATO_IMG_PATH, 260, 210)
+canvas = tk.Canvas(width=280, height=224, bg=BG_COLOR, highlightthickness=0,)
+tomato_img = photo_resize(PATH_TOMATO, 260, 210)
 canvas.create_image(135, 112, image=tomato_img)
 timer_text = canvas.create_text(135, 130, text='00:00', fill='white',
                                 font=(FONT_NAME, 35, 'bold'),)
