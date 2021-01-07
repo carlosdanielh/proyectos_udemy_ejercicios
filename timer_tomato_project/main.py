@@ -15,6 +15,7 @@ BUTTON_FONT = ('Arial', 10, 'bold')
 WORK_MIN = 5
 SHORT_BREAK_MIN = 2
 LONG_BREAK_MIN = 11
+MIN = 1
 counting = 0
 label_count = 0
 
@@ -54,17 +55,21 @@ def start_counting():
     button_start.configure(state=tk.DISABLED)
     counting += 1
 
+    WORK = WORK_MIN * MIN
+    SHORT_BREAK = SHORT_BREAK_MIN * MIN
+    LONG_BREAK = LONG_BREAK_MIN * MIN
+
     if counting < 9:
         if counting % 2 == 1:
-            count_down(WORK_MIN)
+            count_down(WORK)
             label_timer.configure(text='WORK',
                                   font=FONT_LABEL_TIMER, fg=WORK_COLOR)
         elif counting % 2 == 0 and counting != 8:
-            count_down(SHORT_BREAK_MIN)
+            count_down(SHORT_BREAK)
             label_timer.configure(text='BREAK',
                                   font=FONT_LABEL_TIMER, fg=FG_BREAK)
         else:
-            count_down(LONG_BREAK_MIN)
+            count_down(LONG_BREAK)
             label_timer.configure(text='LONG BREAK',
                                   font=FONT_LABEL_TIMER, fg=FG_BREAK)
     else:
