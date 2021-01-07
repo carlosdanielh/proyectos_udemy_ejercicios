@@ -23,7 +23,7 @@ label_count = 0
 # ---------------------------- HIDE CHECK LABELS ------------------------- #
 def hide_all_check_buttons():
     for label_check_image in list_check_image:
-        label_check_image.grid_remove()
+        label_check_image.pack_forget()
 
 
 # ---------------------------- PHOTO RESIZE ------------------------------- #
@@ -58,15 +58,15 @@ def start_counting():
     if counting < 9:
         if counting % 2 == 1:
             count_down(WORK_MIN)
-            label_timer.configure(text='Let\'s get to bussiness!!',
+            label_timer.configure(text='WORK',
                                   font=FONT_LABEL_TIMER, fg='black')
         elif counting % 2 == 0 and counting != 8:
             count_down(SHORT_BREAK_MIN)
-            label_timer.configure(text='It\'s time to rest',
+            label_timer.configure(text='BREAK',
                                   font=FONT_LABEL_TIMER, fg=GREEN)
         else:
             count_down(LONG_BREAK_MIN)
-            label_timer.configure(text='It\'s time for a long rest',
+            label_timer.configure(text='LONG BREAK',
                                   font=FONT_LABEL_TIMER, fg=GREEN)
     else:
         counting = 0
@@ -90,7 +90,7 @@ def count_down(count):
         canvas.itemconfig(timer_text, text=f'{count_min}:{count_sec}')
     else:
         if counting % 2 == 1:
-            list_check_image[label_count].grid()
+            list_check_image[label_count].pack(side=tk.LEFT)
             label_count += 1
         start_counting()
 
@@ -98,37 +98,45 @@ def count_down(count):
 # ---------------------------- UI SETUP ---------------------------------- #
 windows = tk.Tk()
 windows.title('pomodora')
-windows.config(padx=100, pady=50, bg=BLUE)
+windows.config(bg=BLUE)
+# windows.config(padx=100, pady=50, bg=BLUE)
 
 
 label_timer = tk.Label(text='TIMER', font=FONT_LABEL_TIMER,
                        bg=BLUE)
-label_timer.grid(column=0, row=0, columnspan=3, sticky='WE')
+label_timer.grid(column=1, row=0)
 
 button_start = tk.Button(text='Start', command=start_counting,
-                         font=BUTTON_FONT)
-button_start.grid(column=0, row=3)
+                         font=BUTTON_FONT, height=10, width=4)
+button_start.grid(column=0, row=1)
 
 button_reset = tk.Button(text='Reset', command=reset_time,
-                         font=BUTTON_FONT)
-button_reset.grid(column=2, row=3)
+                         font=BUTTON_FONT, height=10, width=4)
+button_reset.grid(column=2, row=1)
 
 ###############################################################################
+frame_bottom = tk.Frame(windows, bg=BLUE, width=160, height=30)
 photo = photo_resize(PHOTO_PATH, 40, 30)
 
-list_check_image = [tk.Label(image=photo, bg=BLUE) for element in range(4)]
-
-list_check_image[0].grid(column=1, row=3, padx=70, sticky='W')
-list_check_image[1].grid(column=1, row=3, padx=100, sticky='W')
-list_check_image[2].grid(column=1, row=3, padx=150, sticky='W') 
-list_check_image[3].grid(column=1, row=3, columnspan=1, padx=160, sticky='W')
+list_check_image = [tk.Label(frame_bottom, image=photo, bg=BLUE)
+                    for element in range(4)]
+# list_check_image[0].pack(side=tk.LEFT)
+# list_check_image[1].pack(side=tk.LEFT)
+# list_check_image[2].pack(side=tk.LEFT)
+# list_check_image[3].pack(side=tk.LEFT)
+# list_check_image[0].grid(column=1, row=3, padx=70, sticky='W')
+# list_check_image[1].grid(column=1, row=3, padx=100, sticky='W')
+# list_check_image[2].grid(column=1, row=3, padx=150, sticky='W') 
+# list_check_image[3].grid(column=1, row=3, columnspan=1, padx=190, sticky='W')
+frame_bottom.grid(column=1, row=2)
 ###############################################################################
-hide_all_check_buttons()
+# hide_all_check_buttons()
 
 canvas = tk.Canvas(width=280, height=224, bg=BLUE, highlightthickness=0,)
 tomato_img = photo_resize(THE_TOMATO_IMG_PATH, 260, 210)
 canvas.create_image(135, 112, image=tomato_img)
 timer_text = canvas.create_text(135, 130, text='00:00', fill='white',
                                 font=(FONT_NAME, 35, 'bold'),)
-canvas.grid(column=1, row=1, pady=30)
+canvas.grid(column=1, row=1, pady=15)
+windows.resizable(False, False)
 windows.mainloop()
