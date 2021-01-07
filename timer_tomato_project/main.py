@@ -100,8 +100,6 @@ windows.title('pomodora')
 windows.config(bg=BG_COLOR)
 icon = tk.PhotoImage(file=PATH_ICON)
 windows.iconphoto(False, icon)
-# windows.config(padx=100, pady=50, bg=BG_COLOR)
-
 
 label_timer = tk.Label(text='TIMER', font=FONT_LABEL_TIMER,
                        bg=BG_COLOR)
@@ -121,23 +119,15 @@ photo = photo_resize(PATH_CHECKS, 40, 30)
 
 list_check_image = [tk.Label(frame_bottom, image=photo, bg=BG_COLOR)
                     for element in range(4)]
-# list_check_image[0].pack(side=tk.LEFT)
-# list_check_image[1].pack(side=tk.LEFT)
-# list_check_image[2].pack(side=tk.LEFT)
-# list_check_image[3].pack(side=tk.LEFT)
-# list_check_image[0].grid(column=1, row=3, padx=70, sticky='W')
-# list_check_image[1].grid(column=1, row=3, padx=100, sticky='W')
-# list_check_image[2].grid(column=1, row=3, padx=150, sticky='W') 
-# list_check_image[3].grid(column=1, row=3, columnspan=1, padx=190, sticky='W')
 frame_bottom.grid(column=1, row=2)
-###############################################################################
-# hide_all_check_buttons()
 
-canvas = tk.Canvas(width=280, height=224, bg=BG_COLOR, highlightthickness=0,)
+###############################################################################
+canvas = tk.Canvas(width=280, height=224, bg=BG_COLOR, highlightthickness=0)
 tomato_img = photo_resize(PATH_TOMATO, 260, 210)
 canvas.create_image(135, 112, image=tomato_img)
 timer_text = canvas.create_text(135, 130, text='00:00', fill='white',
                                 font=(FONT_NAME, 35, 'bold'),)
 canvas.grid(column=1, row=1, pady=15)
+
 windows.resizable(False, False)
 windows.mainloop()
