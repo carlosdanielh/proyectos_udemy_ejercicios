@@ -4,7 +4,7 @@ import math
 from PIL import ImageTk, Image
 # ---------------------------- CONSTANTS -------------------------------- #
 FG_BREAK = "#e7305b"  # PINK
-BG_COLOR = '#464646'  # GREY 
+BG_COLOR = '#464646'  # GREY
 WORK_COLOR = '#5aa57d'  # GREEN
 FONT_NAME = "Comic Sans MS"
 FONT_LABEL_TIMER = (FONT_NAME, 26, 'bold')
