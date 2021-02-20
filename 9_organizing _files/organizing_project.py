@@ -17,8 +17,8 @@ def listbox_selected(event):
         selection = list_box.get(list_box.curselection())
         index = list_box.get(0, tk.END).index(selection)
         answer = msg.askyesno('Info', 'Are your sure you want to save'
-                                     'this extension into the selected folder '
-                                     f'{folder_to_save}?')
+                              'this extension into the selected folder '
+                              f'{folder_to_save}?')
 
         if answer:
             p = Path(folder_to_save)
