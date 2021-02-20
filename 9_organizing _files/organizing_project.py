@@ -18,13 +18,14 @@ def listbox_selected(event):
         index = list_box.get(0, tk.END).index(selection)
         answer = msg.askyesno('Info', 'Are your sure you want to save'
                               'this extension into the selected folder '
-                               f'{folder_to_save}?')
+                             f'{folder_to_save}?')
 
         if answer:
             p = Path(folder_to_save)
             lista = list((Path(folder_selected)).glob('*' + selection))
             for element in lista:
                 shutil.copy(element, folder_to_save)
+
 
 # ------------------------------- create file ---------------------------------
 def save_the_answer(the_answer):
@@ -52,7 +53,6 @@ def to_open():
         msg.showinfo('Info', 'We found some files extensions in this folder'
                      'select one extension to gather them into one folder'
                      '(select a folder to saved them)')
-
 
 
 # ------------------------------- UI ------------------------------------------
