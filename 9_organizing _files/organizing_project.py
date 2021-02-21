@@ -3,28 +3,62 @@ import shutil
 from tkinter import filedialog
 from pathlib import Path
 from tkinter import messagebox as msg
+from tkinter import ttk
 
 
 # ------------------------------- constant ------------------------------------
 the_path_answer = Path.cwd() / 'data' / 'saved_answer'
 folder_selected = str()
+continue_transfering_files = True
+
+
+# ------------------------------- close windows -------------------------------
+def close_window():
+    global continue_transfering_files
+    print('close windows')
+    continue_transfering_files = False
 
 
 # ------------------------------- event selected item list --------------------
 def listbox_selected(event):
+    global continue_transfering_files
+
     if list_box.curselection() != ():
         folder_to_save = filedialog.askdirectory()
         selection = list_box.get(list_box.curselection())
-        index = list_box.get(0, tk.END).index(selection)
         answer = msg.askyesno('Info', 'Are your sure you want to save'
                               'this extension into the selected folder '
-                             f'{folder_to_save}?')
+                              f'{folder_to_save}?')
 
         if answer:
-            p = Path(folder_to_save)
+            window_progress = tk.Toplevel()
+            window_progress.title('coping...')
+            window_progress.wm_attributes('-topmost', 1)
+            window_progress.protocol('WM_DELETE_WINDOW', close_window)
+            ProgBar = ttk.Progressbar(window_progress, length=365,
+                                      style='black.Horizontal.TProgressbar')
+            ProgBar.pack()
+
+            destination_path = str(Path(folder_to_save))
             lista = list((Path(folder_selected)).glob('*' + selection))
+
+            x = 100 / len(lista)
+            add_progress = x
             for element in lista:
-                shutil.copy(element, folder_to_save)
+                if continue_transfering_files:
+                    shutil.copy(element, destination_path)
+                    ProgBar['value'] = add_progress
+                    window_progress.update()
+                    add_progress += x
+                else:
+                    continue_transfering_files = True
+                    res = msg.askyesno('info', 'are you sure you want to stop '
+                                       'the transfer')
+                    print(res)
+                    if res:
+                        break
+            window_progress.resizable(False, False)
+            window_progress.destroy()
 
 
 # ------------------------------- create file ---------------------------------
