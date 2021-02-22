@@ -44,6 +44,7 @@ def listbox_selected(event):
 
             x = 100 / len(lista)
             add_progress = x
+            # this part have to be fixed.
             for element in lista:
                 if continue_transfering_files:
                     shutil.copy(element, destination_path)
