@@ -5,7 +5,6 @@ from pathlib import Path
 from tkinter import messagebox as msg
 from tkinter import ttk
 
-
 # ------------------------------- constant ------------------------------------
 the_path_answer = Path.cwd() / 'data' / 'saved_answer'
 folder_selected = str()
@@ -22,7 +21,6 @@ def close_window():
 # ------------------------------- event selected item list --------------------
 def listbox_selected(event):
     global continue_transfering_files
-
     if list_box.curselection() != ():
         folder_to_save = filedialog.askdirectory()
         selection = list_box.get(list_box.curselection())
@@ -31,6 +29,7 @@ def listbox_selected(event):
                               f'{folder_to_save}?')
 
         if answer:
+            continue_transfering_files = True
             window_progress = tk.Toplevel()
             window_progress.title('coping...')
             window_progress.wm_attributes('-topmost', 1)
@@ -52,12 +51,7 @@ def listbox_selected(event):
                     window_progress.update()
                     add_progress += x
                 else:
-                    continue_transfering_files = True
-                    res = msg.askyesno('info', 'are you sure you want to stop '
-                                       'the transfer')
-                    print(res)
-                    if res:
-                        break
+                    break
             window_progress.resizable(False, False)
             window_progress.destroy()
 
