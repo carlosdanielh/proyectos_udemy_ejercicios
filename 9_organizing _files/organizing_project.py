@@ -4,10 +4,13 @@ from tkinter import filedialog
 from pathlib import Path
 from tkinter import messagebox as msg
 from tkinter import ttk
+from class_window import Window, ToplevelCustomize
 
 # ------------------------------- constant ------------------------------------
+BUTTON_WIDTH = 15
+BUTTON_HEIGHT = 3
 the_path_answer = Path.cwd() / 'data' / 'saved_answer'
-folder_selected = str()
+folder_selected = ''
 continue_transfering_files = True
 
 
@@ -18,15 +21,39 @@ def close_window():
     continue_transfering_files = False
 
 
+# ------------------------------- ccopy all --- -------------------------------
+def copy_all():
+    global list_box
+    global win_copy_all
+    #  listbox
+    win_copy_all = ToplevelCustomize(420, 350)
+    win_copy_all.wm_attributes('-topmost', 1)
+    fm_top = tk.Frame(win_copy_all)
+    scrollbar = tk.Scrollbar(fm_top)
+    scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
+    list_box = tk.Listbox(fm_top, height=10)
+    list_box.configure(yscrollcommand=scrollbar.set)
+    scrollbar.configure(command=list_box.yview)
+    list_box.bind("<<ListboxSelect>>", listbox_selected)
+    list_box.pack()
+    fm_top.pack(side=tk.TOP, pady=20)
+
+    #  menu
+    menubar = tk.Menu(win_copy_all)
+    menubar.add_command(label="Open", command=to_open)
+    menubar.add_command(label="Quit", command=win_copy_all.quit)
+    win_copy_all.config(menu=menubar)
+
+
 # ------------------------------- event selected item list --------------------
 def listbox_selected(event):
     global continue_transfering_files
     if list_box.curselection() != ():
-        folder_to_save = filedialog.askdirectory()
+        folder_to_save = filedialog.askdirectory(parent=win_copy_all)
         selection = list_box.get(list_box.curselection())
         answer = msg.askyesno('Info', 'Are your sure you want to save'
                               'this extension into the selected folder '
-                              f'{folder_to_save}?')
+                              f'{folder_to_save}?', parent=win_copy_all)
 
         if answer:
             continue_transfering_files = True
@@ -42,18 +69,25 @@ def listbox_selected(event):
             lista = list((Path(folder_selected)).glob('*' + selection))
 
             x = 100 / len(lista)
-            add_progress = x
-            # this part have to be fixed.
+            add_progress = 0
+
+            interrupted = False
             for element in lista:
-                if continue_transfering_files:
-                    shutil.copy(element, destination_path)
-                    ProgBar['value'] = add_progress
-                    window_progress.update()
-                    add_progress += x
-                else:
+                if not continue_transfering_files:
+                    msg.showinfo('Info', 'some files have been transfered')
+                    interrupted = True
                     break
+
+                shutil.copy(element, destination_path)
+                ProgBar['value'] = add_progress
+                window_progress.update()
+                add_progress += x
+
             window_progress.resizable(False, False)
             window_progress.destroy()
+
+            if not interrupted:
+                msg.showinfo('Info', 'the files have been transfered')
 
 
 # ------------------------------- create file ---------------------------------
@@ -66,8 +100,8 @@ def save_the_answer(the_answer):
 def to_open():
     global folder_selected
     list_box.delete(0, tk.END)
-    # file_path = filedialog.askopenfilename()  # this will select a file
-    folder_selected = filedialog.askdirectory()  # this will select a folder
+    # this will select a folder
+    folder_selected = filedialog.askdirectory(parent=win_copy_all)
     print(folder_selected)
 
     lista = (Path(folder_selected)).glob('*')
@@ -81,33 +115,37 @@ def to_open():
     else:
         msg.showinfo('Info', 'We found some files extensions in this folder'
                      'select one extension to gather them into one folder'
-                     '(select a folder to saved them)')
+                     '(select a folder to saved them)', parent=win_copy_all)
 
 
 # ------------------------------- UI ------------------------------------------
-window = tk.Tk()
-window.geometry('420x350')
+window = Window(410, 300)
 
-# ------------------------------- menu ----------------------------------------
-menubar = tk.Menu(window)
-menubar.add_command(label="Open", command=to_open)
-menubar.add_command(label="Quit", command=window.quit)
-window.config(menu=menubar)
+# ------------------------------- buttons -------------------------------------
+button_copy_all = tk.Button(window,
+                            text='copy all',
+                            width=BUTTON_WIDTH,
+                            height=BUTTON_HEIGHT,
+                            command=copy_all)
+button_copy_all.grid(column=0, row=1, padx=10, pady=30)
+
+button2 = tk.Button(window,
+                    text='xxxx',
+                    width=BUTTON_WIDTH,
+                    height=BUTTON_HEIGHT,
+                    command=copy_all)
+button2.grid(column=1, row=1, padx=10, pady=10)
+
+button3 = tk.Button(window,
+                    text='xxxx',
+                    width=BUTTON_WIDTH,
+                    height=BUTTON_HEIGHT,
+                    command=copy_all)
+button3.grid(column=2, row=1, padx=10, pady=10)
 
 # ------------------------------- labels --------------------------------------
-title = tk.Label(window, text='ORGANIZER FILES', font=('Arial', 20, 'bold'))
-title.pack()
-
-# ------------------------------- listbox -------------------------------------
-fm_top = tk.Frame(window)
-scrollbar = tk.Scrollbar(fm_top)
-scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
-list_box = tk.Listbox(fm_top, height=10)
-list_box.configure(yscrollcommand=scrollbar.set)
-scrollbar.configure(command=list_box.yview)
-list_box.bind("<<ListboxSelect>>", listbox_selected)
-list_box.pack()
-fm_top.pack(side=tk.TOP, pady=20)
+title = tk.Label(window, text=' FILE\'S ORGANIZER', font=('Arial', 20, 'bold'))
+title.grid(column=0, row=0, columnspan=3)
 
 # ------------------------------- msg box -------------------------------------
 if Path(the_path_answer).exists():
