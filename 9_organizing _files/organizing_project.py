@@ -1,5 +1,6 @@
 import tkinter as tk
 import shutil
+import time
 from tkinter import filedialog
 from pathlib import Path
 from tkinter import messagebox as msg
@@ -21,6 +22,7 @@ def desabling_all_buttons():
     button3.configure(state=tk.DISABLED)
 
 
+# ------------------------------- enabling all buttons -----------------------
 def enabling_all_buttons():
     button_copy_all.configure(state=tk.NORMAL)
     button2.configure(state=tk.NORMAL)
@@ -79,51 +81,53 @@ def listbox_selected():
 
     if list_box.curselection() != ():
         selected_extension = [list_box.get(i) for i in list_box.curselection()]
-        print(selected_extension)
         folder_to_save = filedialog.askdirectory(parent=win_copy_all)
-        # selection = list_box.get(list_box.curselection())
-        answer = msg.askyesno('Info', 'Are your sure you want to save'
-                              'this extension into the selected folder '
-                              f'{folder_to_save}?', parent=win_copy_all)
 
-        if answer:
-            continue_transfering_files = True
-            window_progress = ToplevelCustomize(365, 30)
-            window_progress.title('coping...')
-            window_progress.wm_attributes('-topmost', 1)
-            window_progress.protocol('WM_DELETE_WINDOW', close_window)
-            window_progress.resizable(False, False)
+        if folder_to_save != '':
+            answer = msg.askyesno('Info', 'Are your sure you want to save'
+                                  'this extension into the selected folder '
+                                  f'{folder_to_save}?', parent=win_copy_all)
 
-            ProgBar = ttk.Progressbar(window_progress, length=365,
-                                      style='black.Horizontal.TProgressbar')
-            ProgBar.pack()
+            if answer:
+                continue_transfering_files = True
+                window_progress = ToplevelCustomize(365, 30)
+                window_progress.title('coping...')
+                window_progress.wm_attributes('-topmost', 1)
+                window_progress.protocol('WM_DELETE_WINDOW', close_window)
+                window_progress.resizable(False, False)
 
-            destination_path = str(Path(folder_to_save))
+                style_bar = 'black.Horizontal.TProgressbar'
+                ProgBar = ttk.Progressbar(window_progress,
+                                          length=365,
+                                          style=style_bar)
+                ProgBar.pack()
 
-            lista = []
-            for ext in selected_extension:
-                lista.extend(list((Path(folder_selected)).glob('*' + ext)))
+                destination_path = str(Path(folder_to_save))
 
-            x = 100 / len(lista)
-            add_progress = 0
-            interrupted = False
-            print()
-            for element in lista:
-                if not continue_transfering_files:
-                    msg.showinfo('Info', 'some files have been transfered')
-                    interrupted = True
-                    break
-                # d
-                shutil.copy(element, destination_path)
-                add_progress += x
-                ProgBar['value'] = add_progress
-                window_progress.update()
+                lista = []
+                for ext in selected_extension:
+                    lista.extend(list((Path(folder_selected)).glob('*' + ext)))
 
-            if not interrupted:
-                ProgBar['value'] = 100
-                window_progress.destroy()
-                msg.showinfo('Info', 'the files have been transfered',
-                             parent=win_copy_all)
+                x = 100 / len(lista)
+                add_progress = 0
+                interrupted = False
+                for element in lista:
+                    if not continue_transfering_files:
+                        msg.showinfo('Info', 'some files have been transfered')
+                        interrupted = True
+                        break
+
+                    shutil.copy(element, destination_path)
+                    add_progress += x
+                    ProgBar['value'] = add_progress
+                    window_progress.update()
+
+                if not interrupted:
+                    ProgBar['value'] = 100
+                    time.sleep(1)
+                    window_progress.destroy()
+                    msg.showinfo('Info', 'the files have been transfered',
+                                 parent=win_copy_all)
 
 
 # ------------------------------- create file ---------------------------------
