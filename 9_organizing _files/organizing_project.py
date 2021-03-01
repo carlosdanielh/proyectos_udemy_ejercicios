@@ -6,7 +6,7 @@ from pathlib import Path
 from tkinter import messagebox as msg
 from tkinter import ttk
 from class_window import Window, ToplevelCustomize
-
+from class_miniwin import miniWin
 # ------------------------------- constant ------------------------------------
 BUTTON_WIDTH = 15
 BUTTON_HEIGHT = 3
@@ -18,14 +18,14 @@ continue_transfering_files = True
 # ------------------------------- desabling all buttons -----------------------
 def desabling_all_buttons():
     button_copy_all.configure(state=tk.DISABLED)
-    button2.configure(state=tk.DISABLED)
+    button_move.configure(state=tk.DISABLED)
     button3.configure(state=tk.DISABLED)
 
 
 # ------------------------------- enabling all buttons -----------------------
 def enabling_all_buttons():
     button_copy_all.configure(state=tk.NORMAL)
-    button2.configure(state=tk.NORMAL)
+    button_move.configure(state=tk.NORMAL)
     button3.configure(state=tk.NORMAL)
 
 
@@ -39,18 +39,18 @@ def close_window():
 # ------------------------------- close windows copy --------------------------
 def close_window_copy():
     enabling_all_buttons()
-    win_copy_all.destroy()
+    window_copy_all.destroy()
 
 
 # ------------------------------- ccopy all --- -------------------------------
-def copy_all():
+def copy_files():
     global list_box
-    global win_copy_all
+    global window_copy_all
     desabling_all_buttons()
     #  listbox
-    win_copy_all = ToplevelCustomize(420, 350)
-    win_copy_all.wm_attributes('-topmost', 1)
-    fm_top = tk.Frame(win_copy_all)
+    window_copy_all = ToplevelCustomize(420, 350)
+    window_copy_all.wm_attributes('-topmost', 1)
+    fm_top = tk.Frame(window_copy_all)
     scrollbar = tk.Scrollbar(fm_top)
     scrollbar.pack(side=tk.RIGHT, fill=tk.BOTH)
     list_box = tk.Listbox(fm_top, height=10, selectmode=tk.MULTIPLE)
@@ -61,17 +61,22 @@ def copy_all():
     fm_top.pack(side=tk.TOP, pady=20)
 
     #  menu
-    menubar = tk.Menu(win_copy_all)
+    menubar = tk.Menu(window_copy_all)
     menubar.add_command(label="Open", command=to_open)
-    menubar.add_command(label="Quit", command=win_copy_all.quit)
-    win_copy_all.config(menu=menubar)
-    win_copy_all.protocol('WM_DELETE_WINDOW', close_window_copy)
+    menubar.add_command(label="Quit", command=window_copy_all.quit)
+    window_copy_all.config(menu=menubar)
+    window_copy_all.protocol('WM_DELETE_WINDOW', close_window_copy)
 
     # button
-    button_transfer_copy = tk.Button(win_copy_all,
+    button_transfer_copy = tk.Button(window_copy_all,
                                      text='copy the selected',
                                      command=listbox_selected)
     button_transfer_copy.pack()
+
+
+# ------------------------------- move files ----------------------------------
+def move_files():
+    w = miniWin('move the selected')
 
 
 # ------------------------------- event selected item list --------------------
@@ -81,12 +86,12 @@ def listbox_selected():
 
     if list_box.curselection() != ():
         selected_extension = [list_box.get(i) for i in list_box.curselection()]
-        folder_to_save = filedialog.askdirectory(parent=win_copy_all)
+        folder_to_save = filedialog.askdirectory(parent=window_copy_all)
 
         if folder_to_save != '':
             answer = msg.askyesno('Info', 'Are your sure you want to save'
                                   'this extension into the selected folder '
-                                  f'{folder_to_save}?', parent=win_copy_all)
+                                  f'{folder_to_save}?', parent=window_copy_all)
 
             if answer:
                 continue_transfering_files = True
@@ -127,7 +132,7 @@ def listbox_selected():
                     time.sleep(1)
                     window_progress.destroy()
                     msg.showinfo('Info', 'the files have been transfered',
-                                 parent=win_copy_all)
+                                 parent=window_copy_all)
 
 
 # ------------------------------- create file ---------------------------------
@@ -141,7 +146,7 @@ def to_open():
     global folder_selected
     list_box.delete(0, tk.END)
     # this will select a folder
-    folder_selected = filedialog.askdirectory(parent=win_copy_all)
+    folder_selected = filedialog.askdirectory(parent=window_copy_all)
     print(folder_selected)
 
     lista = (Path(folder_selected)).glob('*')
@@ -157,7 +162,7 @@ def to_open():
             msg.showinfo('Info', 'We found some files extensions in this '
                          'folder select one extension to gather them into one '
                          'folder (select a folder to saved them)',
-                         parent=win_copy_all)
+                         parent=window_copy_all)
 
 
 # ------------------------------- UI ------------------------------------------
@@ -168,21 +173,21 @@ button_copy_all = tk.Button(window,
                             text='copy all',
                             width=BUTTON_WIDTH,
                             height=BUTTON_HEIGHT,
-                            command=copy_all)
+                            command=copy_files)
 button_copy_all.grid(column=0, row=1, padx=10, pady=30)
 
-button2 = tk.Button(window,
-                    text='xxxx',
-                    width=BUTTON_WIDTH,
-                    height=BUTTON_HEIGHT,
-                    command=copy_all)
-button2.grid(column=1, row=1, padx=10, pady=10)
+button_move = tk.Button(window,
+                        text='move files',
+                        width=BUTTON_WIDTH,
+                        height=BUTTON_HEIGHT,
+                        command=move_files)
+button_move.grid(column=1, row=1, padx=10, pady=10)
 
 button3 = tk.Button(window,
                     text='xxxx',
                     width=BUTTON_WIDTH,
                     height=BUTTON_HEIGHT,
-                    command=copy_all)
+                    command=copy_files)
 button3.grid(column=2, row=1, padx=10, pady=10)
 
 # ------------------------------- labels --------------------------------------
