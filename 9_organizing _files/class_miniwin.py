@@ -9,7 +9,7 @@ import time
 continue_transfering_files = True
 
 
-class miniWin():
+class miniWin(tk.Tk):
     def __init__(self, textbutton):
         self.window = ToplevelCustomize(420, 350)
         self.window.wm_attributes('-topmost', 1)
