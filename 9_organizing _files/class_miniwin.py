@@ -3,6 +3,7 @@ from pathlib import Path
 from tkinter import messagebox as msg
 from tkinter import ttk
 from tkinter import filedialog
+import send2trash
 import tkinter as tk
 import shutil
 import time
@@ -44,7 +45,7 @@ class miniWin(tk.Tk):
     def to_open(self):
         global folder_selected
         self.list_box.delete(0, tk.END)
-        self.folder_selected = tk.filedialog.askdirectory(parent=self.window)
+        self.folder_selected = filedialog.askdirectory(parent=self.window)
 
         lista = (Path(self.folder_selected)).glob('*')
         lista_suffix = [file.suffix for file in lista if len(file.suffix) != 0]
@@ -68,8 +69,8 @@ class miniWin(tk.Tk):
         if self.list_box.curselection() != ():
             selected_extension = [self.list_box.get(i) for i in
                                   self.list_box.curselection()]
-            self.folder_to_save = tk.filedialog.askdirectory(parent=self.
-                                                             window)
+            self.folder_to_save = filedialog.askdirectory(parent=self.
+                                                          window)
 
             if self.folder_to_save != '':
                 answer = msg.askyesno('Info', 'Are your sure you want to save'
@@ -116,8 +117,10 @@ class miniWin(tk.Tk):
                             except shutil.Error:
                                 list_files_no_moved.append(element.name)
                                 pass
-                        else:
+                        elif self.textbutton == 'copy the selected':
                             shutil.copy(element, destination_path)
+                        elif self.textbutton == 'delete the selected':
+                            send2trash.send2trash(element)
 
                         add_progress += x
                         self.ProgBar['value'] = add_progress
