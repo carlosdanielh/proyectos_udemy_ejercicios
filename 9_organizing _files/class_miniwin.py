@@ -2,6 +2,7 @@ from class_window import ToplevelCustomize
 from pathlib import Path
 from tkinter import messagebox as msg
 from tkinter import ttk
+from tkinter import filedialog
 import tkinter as tk
 import shutil
 import time
@@ -10,7 +11,8 @@ continue_transfering_files = True
 
 
 class miniWin(tk.Tk):
-    def __init__(self, textbutton):
+    def __init__(self, textbutton, obj):
+        self.list_obj = obj
         self.window = ToplevelCustomize(420, 350)
         self.window.wm_attributes('-topmost', 1)
         self.fm_top = tk.Frame(self.window)
@@ -23,8 +25,8 @@ class miniWin(tk.Tk):
         self.scrollbar.configure(command=self.list_box.yview)
         self.list_box.pack()
         self.fm_top.pack(side=tk.TOP, pady=20)
-
-        self.window.protocol('WM_DELETE_WINDOW', self.close_window_copy)
+        self.is_closed = False
+        self.window.protocol('WM_DELETE_WINDOW', self.mini_win_closed)
 
         self.textbutton = textbutton
         # button
@@ -142,8 +144,9 @@ class miniWin(tk.Tk):
         continue_transfering_files = False
         self.window_progress.destroy()
 
-    def close_window_copy(self):
-        # enabling_all_buttons()
+    def mini_win_closed(self):
+        for obj in self.list_obj:
+            obj.configure(state=tk.NORMAL)
         self.window.destroy()
 
     def update_list_box(self):
