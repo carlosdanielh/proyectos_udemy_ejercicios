@@ -1,11 +1,7 @@
 import tkinter as tk
-import shutil
-import time
-from tkinter import filedialog
 from pathlib import Path
 from tkinter import messagebox as msg
-from tkinter import ttk
-from class_window import Window, ToplevelCustomize
+from class_window import Window
 from class_miniwin import miniWin
 from class_buttons import buttonCustomize
 
@@ -19,40 +15,27 @@ continue_transfering_files = True
 
 # ------------------------------- desabling all buttons -----------------------
 def desabling_all_buttons():
-    button_copy_all.configure(state=tk.DISABLED)
+    button_copy.configure(state=tk.DISABLED)
     button_move.configure(state=tk.DISABLED)
-    button3.configure(state=tk.DISABLED)
+    button_delete.configure(state=tk.DISABLED)
 
 
-# ------------------------------- enabling all buttons -----------------------
-def enabling_all_buttons():
-    button_copy_all.configure(state=tk.NORMAL)
-    button_move.configure(state=tk.NORMAL)
-    button3.configure(state=tk.NORMAL)
+# # ------------------------------- enabling all buttons -----------------------
+# def enabling_all_buttons():
+#     button_copy.configure(state=tk.NORMAL)
+#     button_move.configure(state=tk.NORMAL)
+#     button_delete.configure(state=tk.NORMAL)
 
 
-# ------------------------------- close windows -------------------------------
-# def close_window():
-    # global continue_transfering_files
-    # continue_transfering_files = False
-    # window_progress.destroy()
-
-
-# ------------------------------- close windows copy --------------------------
-# def close_window_copy():
-#     enabling_all_buttons()
-#     window_copy_all.destroy()
-
-def click_button():
-    print('hola')
-    if button_copy.text() == 'copy all':
-        b = miniWin('copy the selected')
+def click_button(option):
+    desabling_all_buttons()
+    objects = [button_copy, button_delete, button_move]
+    if option == 'copy':
+        b = miniWin('copy the selected', objects)
     elif option == 'move':
-        b = miniWin('move the selected')
-    button_clicked = True
-
-def verify():
-    window.after(100, verify)
+        b = miniWin('move the selected', objects)
+    elif option == 'delete':
+        b = miniWin('delete the selected', objects)
 
 
 # ------------------------------- move files ----------------------------------
@@ -68,17 +51,27 @@ def save_the_answer(the_answer):
 
 # ------------------------------- UI ------------------------------------------
 window = Window(410, 300)
-verify()
 
 # ------------------------------- buttons -------------------------------------
-button_copy = buttonCustomize(window, 'copy all',
-                              command=click_button)
+button_copy = tk.Button(window,
+                        text='copy all',
+                        width=BUTTON_WIDTH,
+                        height=BUTTON_HEIGHT,
+                        command=lambda: click_button('copy'))
 button_copy.grid(column=0, row=1, padx=10, pady=30)
 
-button_move = buttonCustomize(window, 'move files')
+button_move = tk.Button(window,
+                        text='move files',
+                        width=BUTTON_WIDTH,
+                        height=BUTTON_HEIGHT,
+                        command=lambda: click_button('move'))                        
 button_move.grid(column=1, row=1, padx=10, pady=10)
 
-button_delete = buttonCustomize(window, 'delete files')
+button_delete = tk.Button(window,
+                          text='delte files',
+                          width=BUTTON_WIDTH,
+                          height=BUTTON_HEIGHT,
+                          command=lambda: click_button('delete'))
 button_delete.grid(column=2, row=1, padx=10, pady=10)
 
 # ------------------------------- labels --------------------------------------
