@@ -68,7 +68,7 @@ button_move = tk.Button(window,
 button_move.grid(column=1, row=1, padx=10, pady=10)
 
 button_delete = tk.Button(window,
-                          text='delte files',
+                          text='delete files',
                           width=BUTTON_WIDTH,
                           height=BUTTON_HEIGHT,
                           command=lambda: click_button('delete'))
