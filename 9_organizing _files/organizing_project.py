@@ -3,7 +3,6 @@ from pathlib import Path
 from tkinter import messagebox as msg
 from class_window import Window
 from class_miniwin import miniWin
-from class_buttons import buttonCustomize
 
 # ------------------------------- constant ------------------------------------
 BUTTON_WIDTH = 15
@@ -20,7 +19,7 @@ def desabling_all_buttons():
     button_delete.configure(state=tk.DISABLED)
 
 
-# # ------------------------------- enabling all buttons -----------------------
+# # ------------------------------- enabling all buttons ----------------------
 # def enabling_all_buttons():
 #     button_copy.configure(state=tk.NORMAL)
 #     button_move.configure(state=tk.NORMAL)
