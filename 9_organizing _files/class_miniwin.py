@@ -66,7 +66,8 @@ class miniWin(tk.Tk):
         global continue_transfering_files
         global window_progress
 
-        if self.list_box.curselection() != ():
+        if self.list_box.curselection() != () and\
+           self.textbutton != 'delete the selected':
             selected_extension = [self.list_box.get(i) for i in
                                   self.list_box.curselection()]
             self.folder_to_save = filedialog.askdirectory(parent=self.
@@ -95,10 +96,8 @@ class miniWin(tk.Tk):
 
                     destination_path = str(Path(self.folder_to_save))
 
-                    lista = []
-                    for ext in selected_extension:
-                        lista.extend(list((Path(self.folder_selected)).
-                                          glob('*' + ext)))
+                    lista = self.list_with_extension(self.folder_selected,
+                                                     selected_extension)
 
                     x = 100 / len(lista)
                     add_progress = 0
@@ -141,6 +140,23 @@ class miniWin(tk.Tk):
                         self.window_progress.destroy()
                         msg.showinfo('Info', 'the files have been transfered'
                                      f'{add_msg}', parent=self.window)
+        else:
+            selected_extension = [self.list_box.get(i) for i in
+                                  self.list_box.curselection()]
+            res = msg.askyesno('Info', 'Are you sure you want to delete all '
+                               'files with the selected extension?')
+            if res:
+                list_files = self.list_with_extension(self.folder_selected,
+                                                      selected_extension)
+
+                for file in list_files:
+                    send2trash.send2trash(str(file))
+
+    def list_with_extension(self, folder_path, list_extension):
+        lista = []
+        lista.extend(list((Path(folder_path)).
+                          glob('*' + ''.join(list_extension))))
+        return lista
 
     def close_window(self):
         global continue_transfering_files
